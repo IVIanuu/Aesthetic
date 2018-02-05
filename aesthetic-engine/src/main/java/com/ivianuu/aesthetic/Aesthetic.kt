@@ -25,9 +25,9 @@ import android.os.Bundle
 import android.support.v4.view.LayoutInflaterCompat
 import android.support.v7.app.AppCompatActivity
 import com.ivianuu.aesthetic.mode.AutoSwitchMode
-import com.ivianuu.aesthetic.newer.R
-import com.ivianuu.aesthetic.tint.util.MaterialColorHelper
-import com.ivianuu.aesthetic.tint.util.isLight
+import com.ivianuu.aesthetic.R
+import com.ivianuu.aesthetic.util.MaterialColorHelper
+import com.ivianuu.aesthetic.util.isLight
 import com.ivianuu.aesthetic.tinter.TintBinder
 import com.ivianuu.aesthetic.util.*
 import io.reactivex.Observable
@@ -46,15 +46,9 @@ class Aesthetic private constructor(private val activity: AppCompatActivity) :
         activity.application.registerActivityLifecycleCallbacks(this)
 
         // set inflation interceptor
-        val layoutInflater = activity.layoutInflater
         val inflationFactory =
-            AestheticInflationFactory(
-                activity,
-                layoutInflater,
-                activity.delegate
-            )
-        inflationFactory.addInterceptor(TintBinder())
-        LayoutInflaterCompat.setFactory(layoutInflater, inflationFactory)
+            AestheticInflationFactory(activity).apply { addInterceptor(TintBinder()) }
+        LayoutInflaterCompat.setFactory(activity.layoutInflater, inflationFactory)
 
         // set theme
         activityTheme()

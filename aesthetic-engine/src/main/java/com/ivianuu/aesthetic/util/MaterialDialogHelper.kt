@@ -22,7 +22,7 @@ import android.content.Context
 import com.ivianuu.aesthetic.Aesthetic
 import io.reactivex.disposables.Disposable
 import android.content.res.ColorStateList
-import com.ivianuu.aesthetic.tint.util.MaterialColorHelper
+import com.ivianuu.aesthetic.util.MaterialColorHelper
 
 object MaterialDialogHelper {
 

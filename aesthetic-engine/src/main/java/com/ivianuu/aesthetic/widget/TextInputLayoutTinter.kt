@@ -16,10 +16,12 @@
 
 package com.ivianuu.aesthetic.widget
 
+import android.content.res.ColorStateList
 import android.support.design.widget.TextInputLayout
 import android.util.AttributeSet
-import com.ivianuu.aesthetic.tint.tint
 import com.ivianuu.aesthetic.tinter.AbstractTinter
+import com.ivianuu.aesthetic.util.MaterialColorHelper
+import com.ivianuu.aesthetic.util.getField
 import com.ivianuu.aesthetic.util.getObservableForResId
 import com.ivianuu.aesthetic.util.resolveResId
 import io.reactivex.rxkotlin.addTo
@@ -33,7 +35,51 @@ internal class TextInputLayoutTinter(view: TextInputLayout, attrs: AttributeSet)
         super.attach()
 
         context.getObservableForResId(backgroundResId, aesthetic.accentColor())
-            .subscribe { view.tint(it) }
+            .subscribe { invalidateColors(it) }
             .addTo(compositeDisposable)
+    }
+
+    private fun invalidateColors(color: Int) {
+        setHintTextColor(MaterialColorHelper.getSecondaryTextColor(context))
+        setAccentTextColor(color)
+    }
+
+    private fun setHintTextColor(hintColor: Int) {
+        try {
+            val mDefaultTextColorField =
+                TextInputLayout::class.getField("mDefaultTextColor")
+            mDefaultTextColorField.set(view, ColorStateList.valueOf(hintColor))
+            val updateLabelStateMethod = TextInputLayout::class.java.getDeclaredMethod(
+                "updateLabelState",
+                Boolean::class.javaPrimitiveType,
+                Boolean::class.javaPrimitiveType
+            )
+            updateLabelStateMethod.isAccessible = true
+            updateLabelStateMethod.invoke(view, false, true)
+        } catch (t: Throwable) {
+            throw IllegalStateException(
+                "Failed to set TextInputLayout hint (collapsed) color: " + t.localizedMessage, t
+            )
+        }
+    }
+
+    private fun setAccentTextColor(accentColor: Int) {
+        try {
+            val mFocusedTextColorField =
+                TextInputLayout::class.getField("mFocusedTextColor")
+            mFocusedTextColorField.set(view, ColorStateList.valueOf(accentColor))
+            val updateLabelStateMethod = TextInputLayout::class.java.getDeclaredMethod(
+                "updateLabelState",
+                Boolean::class.javaPrimitiveType,
+                Boolean::class.javaPrimitiveType
+            )
+            updateLabelStateMethod.isAccessible = true
+            updateLabelStateMethod.invoke(view, false, true)
+        } catch (t: Throwable) {
+            throw IllegalStateException(
+                "Failed to set TextInputLayout accent (expanded) color: " + t.localizedMessage, t
+            )
+        }
+
     }
 }

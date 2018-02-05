@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.ivianuu.aesthetic.tint.util
+package com.ivianuu.aesthetic.util
 
 import android.content.Context
 import android.graphics.Color
 import android.support.v4.content.ContextCompat
-import com.ivianuu.aesthetic.tint.R
+import com.ivianuu.aesthetic.R
 
 object MaterialColorHelper {
 

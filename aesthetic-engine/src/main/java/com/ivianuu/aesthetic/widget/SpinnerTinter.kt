@@ -18,10 +18,11 @@ package com.ivianuu.aesthetic.widget
 
 import android.util.AttributeSet
 import android.widget.Spinner
-import com.ivianuu.aesthetic.tint.tint
 import com.ivianuu.aesthetic.tinter.AbstractTinter
+
 import com.ivianuu.aesthetic.util.getObservableForResId
 import com.ivianuu.aesthetic.util.resolveResId
+import com.ivianuu.aesthetic.util.tint
 import io.reactivex.rxkotlin.addTo
 
 internal class SpinnerTinter(view: Spinner, attrs: AttributeSet) :
@@ -33,8 +34,11 @@ internal class SpinnerTinter(view: Spinner, attrs: AttributeSet) :
         super.attach()
 
         context.getObservableForResId(backgroundResId, aesthetic.accentColor())
-            .subscribe { view.tint(it) }
+            .subscribe { invalidateColors(it) }
             .addTo(compositeDisposable)
     }
 
+    private fun invalidateColors(color: Int) {
+        view.background.tint(color)
+    }
 }

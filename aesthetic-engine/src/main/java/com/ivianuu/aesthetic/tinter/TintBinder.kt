@@ -28,7 +28,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.*
 import com.ivianuu.aesthetic.AestheticInflationFactory
-import com.ivianuu.aesthetic.newer.R
+import com.ivianuu.aesthetic.R
 import com.ivianuu.aesthetic.widget.*
 
 internal class TintBinder : AestheticInflationFactory.Interceptor {

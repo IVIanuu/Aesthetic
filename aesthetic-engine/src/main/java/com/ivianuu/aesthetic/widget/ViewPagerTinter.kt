@@ -18,8 +18,9 @@ package com.ivianuu.aesthetic.widget
 
 import android.support.v4.view.ViewPager
 import android.util.AttributeSet
-import com.ivianuu.aesthetic.tint.tint
 import com.ivianuu.aesthetic.tinter.AbstractTinter
+
+import com.ivianuu.aesthetic.util.EdgeGlowUtil
 import io.reactivex.rxkotlin.addTo
 
 internal class ViewPagerTinter(view: ViewPager, attrs: AttributeSet) :
@@ -30,8 +31,11 @@ internal class ViewPagerTinter(view: ViewPager, attrs: AttributeSet) :
 
         aesthetic
             .accentColor()
-            .subscribe { view.tint(it) }
+            .subscribe { invalidateColors(it) }
             .addTo(compositeDisposable)
     }
 
+    private fun invalidateColors(color: Int) {
+        EdgeGlowUtil.setEdgeGlowColor(view, color)
+    }
 }

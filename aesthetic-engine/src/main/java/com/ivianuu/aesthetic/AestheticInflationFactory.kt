@@ -25,15 +25,16 @@ import android.support.v7.view.ContextThemeWrapper
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import com.ivianuu.aesthetic.tint.util.getField
+import com.ivianuu.aesthetic.util.getField
 import java.lang.reflect.Field
 import java.lang.reflect.Method
 
 internal class AestheticInflationFactory(
-    private val keyContext: AppCompatActivity,
-    private val layoutInflater: LayoutInflater,
-    private val delegate: AppCompatDelegate?
+    private val activity: AppCompatActivity
 ) : LayoutInflaterFactory {
+
+    private val delegate = activity.delegate
+    private val layoutInflater = activity.layoutInflater
 
     private val interceptors = ArrayList<Interceptor>()
 
@@ -83,22 +84,9 @@ internal class AestheticInflationFactory(
         context: Context,
         attrs: AttributeSet
     ): View? {
-        var view: View?
-
-        // First, check if the AppCompatDelegate will give us a view, usually (maybe always) null.
-        if (delegate != null) {
-            view = delegate.createView(parent, name, context, attrs)
-            view = if (view == null) {
-                keyContext.onCreateView(parent, name, context, attrs)
-            } else {
-                null
-            }
-        } else {
-            view = null
-        }
-
-        if (view != null && BLACKLIST.contains(view::class.java.name)) {
-            return view
+        var view = delegate.createView(parent, name, context, attrs)
+        if (view == null) {
+            view = activity.onCreateView(parent, name, context, attrs)
         }
 
         view = try {
@@ -142,7 +130,6 @@ internal class AestheticInflationFactory(
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                e.printStackTrace()
                 null
             } finally {
                 constructorArgs[0] = lastContext
@@ -158,7 +145,10 @@ internal class AestheticInflationFactory(
             )
         }
 
-        if (view != null) interceptors.forEach { it.onViewInflated(view, attrs) }
+        if (view != null
+            && !BLACKLIST.contains(view::class.java.name)) {
+            interceptors.forEach { it.onViewInflated(view, attrs) }
+        }
 
         return view
     }

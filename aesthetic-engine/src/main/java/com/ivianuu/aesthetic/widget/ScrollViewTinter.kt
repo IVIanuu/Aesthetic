@@ -18,8 +18,9 @@ package com.ivianuu.aesthetic.widget
 
 import android.util.AttributeSet
 import android.widget.ScrollView
-import com.ivianuu.aesthetic.tint.tint
 import com.ivianuu.aesthetic.tinter.AbstractTinter
+
+import com.ivianuu.aesthetic.util.EdgeGlowUtil
 import io.reactivex.rxkotlin.addTo
 
 internal class ScrollViewTinter(view: ScrollView, attrs: AttributeSet) :
@@ -30,8 +31,11 @@ internal class ScrollViewTinter(view: ScrollView, attrs: AttributeSet) :
 
         aesthetic
             .accentColor()
-            .subscribe { view.tint(it) }
+            .subscribe { invalidateColors(it) }
             .addTo(compositeDisposable)
     }
 
+    private fun invalidateColors(color: Int) {
+        EdgeGlowUtil.setEdgeGlowColor(view, color)
+    }
 }

@@ -18,7 +18,7 @@ package com.ivianuu.aesthetic.widget
 
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
-import com.ivianuu.aesthetic.newer.R
+import com.ivianuu.aesthetic.R
 import com.ivianuu.aesthetic.tinter.AbstractTinter
 import com.ivianuu.aesthetic.util.getObservableForResId
 import com.ivianuu.aesthetic.util.resolveResId

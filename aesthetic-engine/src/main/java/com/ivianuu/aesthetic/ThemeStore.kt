@@ -22,8 +22,8 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.ivianuu.aesthetic.mode.*
-import com.ivianuu.aesthetic.tint.util.darken
-import com.ivianuu.aesthetic.tint.util.isLight
+import com.ivianuu.aesthetic.util.darken
+import com.ivianuu.aesthetic.util.isLight
 import com.ivianuu.aesthetic.util.getResColor
 import com.ivianuu.aesthetic.util.resolveColor
 

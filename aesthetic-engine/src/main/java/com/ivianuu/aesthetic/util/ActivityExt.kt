@@ -20,7 +20,7 @@ import android.app.Activity
 import android.app.ActivityManager
 import android.os.Build
 import android.view.View
-import com.ivianuu.aesthetic.tint.util.stripAlpha
+import com.ivianuu.aesthetic.util.stripAlpha
 
 fun Activity.setStatusBarColorCompat(color: Int) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

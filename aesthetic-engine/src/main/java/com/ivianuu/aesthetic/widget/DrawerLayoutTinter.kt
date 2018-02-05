@@ -17,10 +17,11 @@
 package com.ivianuu.aesthetic.widget
 
 import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.util.AttributeSet
-import com.ivianuu.aesthetic.tint.tint
-import com.ivianuu.aesthetic.tint.util.MaterialColorHelper
+import com.ivianuu.aesthetic.util.MaterialColorHelper
 import com.ivianuu.aesthetic.tinter.AbstractTinter
+import com.ivianuu.aesthetic.util.getField
 import io.reactivex.rxkotlin.addTo
 
 internal class DrawerLayoutTinter(view: DrawerLayout, attrs: AttributeSet) :
@@ -32,8 +33,27 @@ internal class DrawerLayoutTinter(view: DrawerLayout, attrs: AttributeSet) :
         aesthetic
             .primaryColor()
             .map { MaterialColorHelper.getPrimaryTextColor(context, it) }
-            .subscribe { view.tint(it) }
+            .subscribe { invalidateColors(it) }
             .addTo(compositeDisposable)
+    }
+
+    private fun invalidateColors(color: Int) {
+        try {
+            val listenersField = DrawerLayout::class.getField("mListeners")
+            val listeners = listenersField.get(view) as List<DrawerLayout.DrawerListener>
+            listeners
+                .filter { it is ActionBarDrawerToggle }
+                .map { it as ActionBarDrawerToggle }
+                .forEach { it.drawerArrowDrawable.color = color }
+
+            val listenerField = DrawerLayout::class.getField("mListener")
+            val listener = listenerField.get(view) as DrawerLayout.DrawerListener?
+            if (listener is ActionBarDrawerToggle?) {
+                listener?.drawerArrowDrawable?.color = color
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 }

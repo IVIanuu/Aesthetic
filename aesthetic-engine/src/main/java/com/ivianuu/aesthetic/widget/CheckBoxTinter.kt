@@ -16,12 +16,17 @@
 
 package com.ivianuu.aesthetic.widget
 
+import android.R
+import android.content.res.ColorStateList
+import android.os.Build
+import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.widget.CheckBox
-import com.ivianuu.aesthetic.tint.tint
 import com.ivianuu.aesthetic.tinter.AbstractTinter
+import com.ivianuu.aesthetic.util.MaterialColorHelper
 import com.ivianuu.aesthetic.util.getObservableForResId
 import com.ivianuu.aesthetic.util.resolveResId
+import com.ivianuu.aesthetic.util.tint
 import io.reactivex.rxkotlin.addTo
 
 internal class CheckBoxTinter(view: CheckBox, attrs: AttributeSet) :
@@ -33,7 +38,28 @@ internal class CheckBoxTinter(view: CheckBox, attrs: AttributeSet) :
         super.attach()
 
         context.getObservableForResId(backgroundResId, aesthetic.accentColor())
-            .subscribe { view.tint(it) }
+            .subscribe { invalidateColors(it) }
             .addTo(compositeDisposable)
+    }
+
+    private fun invalidateColors(color: Int) {
+        val sl = ColorStateList(
+            arrayOf(
+                intArrayOf(-R.attr.state_enabled),
+                intArrayOf(R.attr.state_enabled, -R.attr.state_checked),
+                intArrayOf(R.attr.state_enabled, R.attr.state_checked)
+            ),
+            intArrayOf(
+                MaterialColorHelper.getControlDisabledColor(context),
+                MaterialColorHelper.getControlNormalColor(context),
+                color
+            )
+        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            view.buttonTintList = sl
+        } else {
+            view.buttonDrawable =
+                    ContextCompat.getDrawable(context, com.ivianuu.aesthetic.R.drawable.abc_btn_check_material)?.tint(color)
+        }
     }
 }

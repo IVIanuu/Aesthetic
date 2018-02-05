@@ -16,12 +16,13 @@
 
 package com.ivianuu.aesthetic.widget
 
+import android.R
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.support.design.widget.FloatingActionButton
 import android.util.AttributeSet
-import com.ivianuu.aesthetic.tint.tint
 import com.ivianuu.aesthetic.tinter.AbstractTinter
-import com.ivianuu.aesthetic.util.getObservableForResId
-import com.ivianuu.aesthetic.util.resolveResId
+import com.ivianuu.aesthetic.util.*
 import io.reactivex.rxkotlin.addTo
 
 internal class FloatingActionButtonTinter(
@@ -35,7 +36,29 @@ internal class FloatingActionButtonTinter(
         super.attach()
 
         context.getObservableForResId(backgroundResId, aesthetic.accentColor())
-            .subscribe { view.tint(it) }
+            .subscribe { invalidateColors(it) }
             .addTo(compositeDisposable)
+    }
+
+    private fun invalidateColors(color: Int) {
+        val dark = color.isDark()
+        val pressed = color.lighten()
+        val rippleColor = MaterialColorHelper.getRippleColor(context, dark)
+        val textColor = MaterialColorHelper.getPrimaryTextColor(context, dark)
+
+        val colorStateList: ColorStateList
+
+        colorStateList = ColorStateList(
+            arrayOf(
+                intArrayOf(-R.attr.state_pressed),
+                intArrayOf(R.attr.state_pressed)
+            ),
+            intArrayOf(color, pressed)
+        )
+
+        view.rippleColor = rippleColor
+        view.backgroundTintList = colorStateList
+        view.drawable?.tint(textColor)
+        view.setColorFilter(if (dark) Color.WHITE else Color.BLACK)
     }
 }

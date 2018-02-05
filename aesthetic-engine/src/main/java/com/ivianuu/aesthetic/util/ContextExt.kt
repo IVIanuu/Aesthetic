@@ -21,8 +21,8 @@ import android.support.annotation.AttrRes
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import com.ivianuu.aesthetic.Aesthetic
-import com.ivianuu.aesthetic.newer.R
-import com.ivianuu.aesthetic.tint.util.darken
+import com.ivianuu.aesthetic.R
+import com.ivianuu.aesthetic.util.darken
 import io.reactivex.Observable
 
 internal fun Context.getResColor(resId: Int) = ContextCompat.getColor(this, resId)

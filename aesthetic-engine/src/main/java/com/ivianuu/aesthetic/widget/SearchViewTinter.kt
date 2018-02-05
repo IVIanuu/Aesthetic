@@ -16,11 +16,17 @@
 
 package com.ivianuu.aesthetic.widget
 
+import android.content.res.ColorStateList
+import android.graphics.drawable.Drawable
 import android.support.v7.widget.SearchView
 import android.util.AttributeSet
-import com.ivianuu.aesthetic.tint.tint
+import android.widget.EditText
+import android.widget.ImageView
 import com.ivianuu.aesthetic.tinter.AbstractTinter
+
+import com.ivianuu.aesthetic.util.*
 import io.reactivex.rxkotlin.addTo
+import java.lang.reflect.Field
 
 internal class SearchViewTinter(view: SearchView, attrs: AttributeSet) :
     AbstractTinter<SearchView>(view, attrs) {
@@ -30,7 +36,43 @@ internal class SearchViewTinter(view: SearchView, attrs: AttributeSet) :
 
         aesthetic
             .primaryColor()
-            .subscribe { view.tint(it) }
+            .subscribe { invalidateColors(it) }
             .addTo(compositeDisposable)
+    }
+
+    private fun invalidateColors(bgColor: Int) {
+        with(view) {
+            val activeColor = MaterialColorHelper.getPrimaryTextColor(context, bgColor)
+            val inactiveColor = MaterialColorHelper.getSecondaryTextColor(context, bgColor)
+            setBackgroundColor(bgColor)
+
+            val colorStateList = getEnabledColorStateList(activeColor, inactiveColor)
+
+            try {
+                val searchSrcTextViewField = SearchView::class.getField("mSearchSrcTextView")
+                val searchSrcTextView = searchSrcTextViewField.get(this) as EditText
+                searchSrcTextView.setTextColor(activeColor)
+                searchSrcTextView.setHintTextColor(inactiveColor)
+                searchSrcTextView.setCursorTint(activeColor)
+
+                var field = SearchView::class.getField("mSearchButton")
+                tintImageView(field, colorStateList)
+                field = SearchView::class.getField("mGoButton")
+                tintImageView(field, colorStateList)
+                field = SearchView::class.getField("mCloseButton")
+                tintImageView(field, colorStateList)
+                field = SearchView::class.getField("mVoiceButton")
+                tintImageView(field, colorStateList)
+
+                field = SearchView::class.getField("mSearchHintIcon")
+                (field.get(this) as Drawable?)?.tint(colorStateList)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun SearchView.tintImageView(field: Field, colorStateList: ColorStateList) {
+        (field.get(this) as ImageView).drawable?.tint(colorStateList)
     }
 }

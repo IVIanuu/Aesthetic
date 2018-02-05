@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package com.ivianuu.aesthetic.tint
+package com.ivianuu.aesthetic.util
 
-import android.support.v4.widget.NestedScrollView
-import com.ivianuu.aesthetic.tint.util.EdgeGlowUtil
+import java.lang.reflect.Field
+import kotlin.reflect.KClass
 
-fun NestedScrollView.tint(color: Int) {
-    EdgeGlowUtil.setEdgeGlowColor(this, color)
+fun KClass<*>.getField(fieldName: String): Field {
+    val field = java.getDeclaredField(fieldName)
+    field.isAccessible = true
+    return field
 }

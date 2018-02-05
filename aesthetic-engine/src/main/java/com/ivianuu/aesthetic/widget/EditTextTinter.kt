@@ -16,12 +16,19 @@
 
 package com.ivianuu.aesthetic.widget
 
+import android.R
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
+import android.os.Build
+import android.support.v4.view.TintableBackgroundView
+import android.support.v4.view.ViewCompat
 import android.util.AttributeSet
 import android.widget.EditText
-import com.ivianuu.aesthetic.tint.tint
 import com.ivianuu.aesthetic.tinter.AbstractTinter
+import com.ivianuu.aesthetic.util.MaterialColorHelper
 import com.ivianuu.aesthetic.util.getObservableForResId
+import com.ivianuu.aesthetic.util.setCursorTint
+import com.ivianuu.aesthetic.util.setTextHandleTint
 import io.reactivex.rxkotlin.addTo
 
 @SuppressLint("ResourceType")
@@ -49,12 +56,41 @@ internal class EditTextTinter(view: EditText, attrs: AttributeSet) :
         super.attach()
 
         context.getObservableForResId(backgroundResId, aesthetic.accentColor())
-            .subscribe { view.tint(it) }
+            .subscribe { invalidateColors(it) }
             .addTo(compositeDisposable)
 
         context
             .getObservableForResId(textColorHintResId)
             .subscribe { view.setHintTextColor(it) }
             .addTo(compositeDisposable)
+    }
+
+    private fun invalidateColors(color: Int) {
+        with(view) {
+            val colorStateList = ColorStateList(
+                arrayOf(
+                    intArrayOf(-R.attr.state_enabled),
+                    intArrayOf(
+                        R.attr.state_enabled,
+                        -R.attr.state_pressed,
+                        -R.attr.state_focused
+                    ),
+                    intArrayOf()
+                ),
+                intArrayOf(
+                    MaterialColorHelper.getPrimaryDisabledTextColor(context),
+                    MaterialColorHelper.getPrimaryTextColor(context),
+                    color
+                )
+            )
+            if (this is TintableBackgroundView) {
+                ViewCompat.setBackgroundTintList(this, colorStateList)
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                backgroundTintList = colorStateList
+            }
+
+            setCursorTint(color)
+            setTextHandleTint(color)
+        }
     }
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.ivianuu.aesthetic.tint.util
+package com.ivianuu.aesthetic.util
 
 import android.graphics.Color
 

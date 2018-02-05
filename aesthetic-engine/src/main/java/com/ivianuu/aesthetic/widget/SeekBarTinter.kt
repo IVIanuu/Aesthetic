@@ -16,12 +16,12 @@
 
 package com.ivianuu.aesthetic.widget
 
+import android.os.Build
 import android.util.AttributeSet
 import android.widget.SeekBar
-import com.ivianuu.aesthetic.tint.tint
 import com.ivianuu.aesthetic.tinter.AbstractTinter
-import com.ivianuu.aesthetic.util.getObservableForResId
-import com.ivianuu.aesthetic.util.resolveResId
+
+import com.ivianuu.aesthetic.util.*
 import io.reactivex.rxkotlin.addTo
 
 internal class SeekBarTinter(view: SeekBar, attrs: AttributeSet) :
@@ -33,7 +33,25 @@ internal class SeekBarTinter(view: SeekBar, attrs: AttributeSet) :
         super.attach()
 
         context.getObservableForResId(backgroundResId, aesthetic.accentColor())
-            .subscribe { view.tint(it) }
+            .subscribe { invalidateColors(it) }
             .addTo(compositeDisposable)
+    }
+
+    private fun invalidateColors(color: Int) {
+        with(view) {
+            val colorStateList = getDisabledColorStateList(
+                color,
+                MaterialColorHelper.getControlDisabledColor(context)
+            )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                thumbTintList = colorStateList
+                progressTintList = colorStateList
+            } else {
+                progressDrawable?.tint(colorStateList)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    thumb?.tint(colorStateList)
+                }
+            }
+        }
     }
 }

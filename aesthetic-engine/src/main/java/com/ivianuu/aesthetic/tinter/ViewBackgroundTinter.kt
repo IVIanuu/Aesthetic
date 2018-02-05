@@ -18,6 +18,7 @@ package com.ivianuu.aesthetic.tinter
 
 import android.util.AttributeSet
 import android.view.View
+import com.ivianuu.aesthetic.tinter.AbstractTinter
 import com.ivianuu.aesthetic.util.getObservableForResId
 import com.ivianuu.aesthetic.util.resolveResId
 import io.reactivex.Observable

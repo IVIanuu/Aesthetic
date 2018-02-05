@@ -18,9 +18,11 @@ package com.ivianuu.aesthetic.widget
 
 import android.support.design.widget.TabLayout
 import android.util.AttributeSet
+import android.view.View
 import com.ivianuu.aesthetic.mode.TabLayoutIndicatorMode
-import com.ivianuu.aesthetic.tint.tint
 import com.ivianuu.aesthetic.tinter.AbstractTinter
+
+import com.ivianuu.aesthetic.util.*
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.addTo
 
@@ -53,7 +55,34 @@ internal class TabLayoutTinter(view: TabLayout, attrs: AttributeSet) :
                         indicatorModeObservable
                     )
             }
-            .subscribe { view.tint(it.first, it.second) }
+            .subscribe { invalidateColors(it.first, it.second) }
             .addTo(compositeDisposable)
+    }
+
+    private fun invalidateColors(bgColor: Int,
+                                 indicatorColor: Int) {
+        val activeColor = MaterialColorHelper.getPrimaryTextColor(context, bgColor)
+        val inactiveColor = MaterialColorHelper.getSecondaryTextColor(context, bgColor)
+        with(view) {
+            setBackgroundColor(bgColor)
+
+            val colorStateList = getDisabledColorStateList(activeColor, inactiveColor)
+
+            (0 until tabCount).mapNotNull { getTabAt(it) }
+                .forEach {
+                    it.icon?.tint(colorStateList)
+                    try {
+                        val viewField = it::class.getField("mView")
+                        val tabView = viewField.get(it) as View
+                        tabView.background =
+                                RippleDrawableHelper.getRippleDrawable(context, bgColor.isDark())
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+            setTabTextColors(inactiveColor, activeColor)
+            setSelectedTabIndicatorColor(indicatorColor)
+        }
     }
 }

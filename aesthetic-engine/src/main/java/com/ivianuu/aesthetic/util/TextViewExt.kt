@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-package com.ivianuu.aesthetic.tint
+package com.ivianuu.aesthetic.util
 
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.widget.TextView
-import com.ivianuu.aesthetic.tint.util.getField
-import com.ivianuu.aesthetic.tint.util.tint
 
 fun TextView.setCursorTint(color: Int) {
     try {

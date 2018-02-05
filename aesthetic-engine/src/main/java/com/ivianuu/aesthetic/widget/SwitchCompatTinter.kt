@@ -16,12 +16,15 @@
 
 package com.ivianuu.aesthetic.widget
 
+import android.R
+import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.drawable.Drawable
 import android.support.v7.widget.SwitchCompat
 import android.util.AttributeSet
-import com.ivianuu.aesthetic.tint.tint
+
 import com.ivianuu.aesthetic.tinter.AbstractTinter
-import com.ivianuu.aesthetic.util.getObservableForResId
-import com.ivianuu.aesthetic.util.resolveResId
+import com.ivianuu.aesthetic.util.*
 import io.reactivex.rxkotlin.addTo
 
 internal class SwitchCompatTinter(view: SwitchCompat, attrs: AttributeSet) :
@@ -33,7 +36,65 @@ internal class SwitchCompatTinter(view: SwitchCompat, attrs: AttributeSet) :
         super.attach()
 
         context.getObservableForResId(backgroundResId, aesthetic.accentColor())
-            .subscribe { view.tint(it) }
+            .subscribe { invalidateColors(it) }
             .addTo(compositeDisposable)
+    }
+
+    private fun invalidateColors(color: Int) {
+        with(view) {
+            if (trackDrawable != null) {
+                trackDrawable = modifySwitchDrawable(
+                    context,
+                    trackDrawable,
+                    color,
+                    false
+                )
+            }
+            if (thumbDrawable != null) {
+                thumbDrawable = modifySwitchDrawable(
+                    context,
+                    thumbDrawable,
+                    color,
+                    true
+                )
+            }
+        }
+    }
+
+    private fun modifySwitchDrawable(
+        context: Context,
+        from: Drawable,
+        tint: Int,
+        thumb: Boolean
+    ): Drawable? {
+        var tint = tint
+        if (tint.isDark()) {
+            tint = tint.lighten()
+        }
+        tint = tint.adjustAlpha(if (!thumb) 0.5f else 1.0f)
+        val disabled: Int
+        var normal: Int
+        if (thumb) {
+            disabled = MaterialColorHelper.getSwitchThumbDisabledColor(context)
+            normal = MaterialColorHelper.getSwitchThumbNormalColor(context)
+        } else {
+            disabled = MaterialColorHelper.getSwitchTrackDisabledColor(context)
+            normal = MaterialColorHelper.getSwitchTrackNormalColor(context)
+        }
+
+        val sl = ColorStateList(
+            arrayOf(
+                intArrayOf(-R.attr.state_enabled),
+                intArrayOf(
+                    R.attr.state_enabled,
+                    -R.attr.state_activated,
+                    -R.attr.state_checked
+                ),
+                intArrayOf(R.attr.state_enabled, R.attr.state_activated),
+                intArrayOf(R.attr.state_enabled, R.attr.state_checked)
+            ),
+            intArrayOf(disabled, normal, tint, tint)
+        )
+        return from.tint(sl)
     }
 }

@@ -9,7 +9,6 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/aesthetic-engine" />
-            <option value="$PROJECT_DIR$/aesthetic-tint" />
             <option value="$PROJECT_DIR$/sample" />
           </set>
         </option>

@@ -19,9 +19,6 @@ package com.ivianuu.aesthetic.sample
 import android.os.Bundle
 import android.support.v7.preference.PreferenceFragmentCompat
 
-/**
- * @author Manuel Wrage (IVIanuu)
- */
 class PrefsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

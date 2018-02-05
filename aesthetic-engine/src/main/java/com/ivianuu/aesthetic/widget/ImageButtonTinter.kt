@@ -16,9 +16,9 @@
 
 package com.ivianuu.aesthetic.widget
 
+import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.widget.ImageButton
-import com.ivianuu.aesthetic.tint.tint
 import com.ivianuu.aesthetic.tinter.AbstractTinter
 import com.ivianuu.aesthetic.util.getObservableForResId
 import com.ivianuu.aesthetic.util.resolveResId
@@ -33,8 +33,11 @@ internal class ImageButtonTinter(view: ImageButton, attrs: AttributeSet) :
         super.attach()
 
         context.getObservableForResId(backgroundResId)
-            .subscribe { view.tint(it) }
+            .subscribe { invalidateColors(it) }
             .addTo(compositeDisposable)
     }
 
+    private fun invalidateColors(color: Int) {
+        view.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+    }
 }

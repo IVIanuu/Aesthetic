@@ -14,11 +14,22 @@
  * limitations under the License.
  */
 
-package com.ivianuu.aesthetic.tint
+package com.ivianuu.aesthetic.util
 
-import android.widget.ListView
-import com.ivianuu.aesthetic.tint.util.EdgeGlowUtil
+import android.content.res.ColorStateList
+import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
+import android.support.v4.graphics.drawable.DrawableCompat
 
-fun ListView.tint(color: Int) {
-    EdgeGlowUtil.setEdgeGlowColor(this, color)
+fun Drawable.tint(color: Int): Drawable {
+    mutate()
+    DrawableCompat.setTintMode(this, PorterDuff.Mode.SRC_IN)
+    DrawableCompat.setTint(this, color)
+    return this
+}
+
+fun Drawable.tint(colorStateList: ColorStateList): Drawable {
+    mutate()
+    DrawableCompat.setTintList(this, colorStateList)
+    return this
 }

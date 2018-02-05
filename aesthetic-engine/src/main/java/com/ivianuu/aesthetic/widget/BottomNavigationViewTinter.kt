@@ -16,16 +16,16 @@
 
 package com.ivianuu.aesthetic.widget
 
+import android.R
+import android.content.res.ColorStateList
 import android.graphics.Color
+import android.support.design.internal.BottomNavigationItemView
 import android.support.design.widget.BottomNavigationView
 import android.util.AttributeSet
 import com.ivianuu.aesthetic.mode.BottomNavBgMode
 import com.ivianuu.aesthetic.mode.BottomNavIconTextMode
-import com.ivianuu.aesthetic.tint.tint
-import com.ivianuu.aesthetic.tint.util.MaterialColorHelper
-import com.ivianuu.aesthetic.tint.util.darken
-import com.ivianuu.aesthetic.tint.util.isLight
 import com.ivianuu.aesthetic.tinter.AbstractTinter
+import com.ivianuu.aesthetic.util.*
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.addTo
@@ -68,8 +68,38 @@ internal class BottomNavigationViewTinter(view: BottomNavigationView, attrs: Att
                 } else {
                     iconText
                 }
-                view.tint(bg, iconText)
+                invalidateColors(bg)
             }
             .addTo(compositeDisposable)
+    }
+
+    private fun invalidateColors(bgColor: Int) {
+        val selectedColor = if (bgColor.isLight()) Color.BLACK else Color.WHITE
+        view.setBackgroundColor(bgColor)
+
+        val baseColor = MaterialColorHelper.getSecondaryTextColor(context, bgColor.isDark())
+        val colorStateList = ColorStateList(
+            arrayOf(
+                intArrayOf(-R.attr.state_checked),
+                intArrayOf(R.attr.state_checked)
+            ),
+            intArrayOf(baseColor.adjustAlpha(0.87f), selectedColor)
+        )
+
+        view.itemIconTintList = colorStateList
+        view.itemTextColor = colorStateList
+
+        try {
+            val menuViewField = BottomNavigationView::class.getField("mMenuView")
+            val menuView = menuViewField.get(this)
+            val buttonsField = menuView::class.getField("mButtons")
+            val buttons = buttonsField.get(menuView) as Array<BottomNavigationItemView>
+            buttons.forEach {
+                it.background =
+                        RippleDrawableHelper.getBorderlessRippleDrawable(context, bgColor.isDark())
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

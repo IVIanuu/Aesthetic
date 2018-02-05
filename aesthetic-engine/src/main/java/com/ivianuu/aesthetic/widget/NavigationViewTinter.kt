@@ -16,11 +16,15 @@
 
 package com.ivianuu.aesthetic.widget
 
+import android.content.res.ColorStateList
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.StateListDrawable
 import android.support.design.widget.NavigationView
 import android.util.AttributeSet
 import com.ivianuu.aesthetic.mode.NavigationViewMode
-import com.ivianuu.aesthetic.tint.tint
 import com.ivianuu.aesthetic.tinter.AbstractTinter
+import com.ivianuu.aesthetic.util.MaterialColorHelper
+import com.ivianuu.aesthetic.util.adjustAlpha
 import io.reactivex.rxkotlin.addTo
 
 internal class NavigationViewTinter(view: NavigationView, attrs: AttributeSet) :
@@ -38,7 +42,40 @@ internal class NavigationViewTinter(view: NavigationView, attrs: AttributeSet) :
                     else -> throw IllegalStateException("Unknown nav view mode $it")
                 }
             }
-            .subscribe { view.tint(it) }
+            .subscribe { invalidateColors(it) }
             .addTo(compositeDisposable)
+    }
+
+    private fun invalidateColors(color: Int) {
+        with(view) {
+            val baseColor = MaterialColorHelper.getPrimaryTextColor(context)
+            val unselectedIconColor = baseColor.adjustAlpha(0.54f)
+            val unselectedTextColor = baseColor.adjustAlpha(0.87f)
+            val selectedItemBgColor = MaterialColorHelper.getNavigationDrawerSelectedColor(context)
+
+            val iconSl = ColorStateList(
+                arrayOf(
+                    intArrayOf(-android.R.attr.state_checked),
+                    intArrayOf(android.R.attr.state_checked)
+                ),
+                intArrayOf(unselectedIconColor, color)
+            )
+            val textSl = ColorStateList(
+                arrayOf(
+                    intArrayOf(-android.R.attr.state_checked),
+                    intArrayOf(android.R.attr.state_checked)
+                ),
+                intArrayOf(unselectedTextColor, color)
+            )
+            itemTextColor = textSl
+            itemIconTintList = iconSl
+
+            val bgDrawable = StateListDrawable()
+            bgDrawable.addState(
+                intArrayOf(android.R.attr.state_checked), ColorDrawable(selectedItemBgColor)
+            )
+
+            itemBackground = bgDrawable
+        }
     }
 }

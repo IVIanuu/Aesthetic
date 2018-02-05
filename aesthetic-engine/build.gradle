@@ -36,9 +36,6 @@ dependencies {
     api rootProject.ext.supportDesign
     api rootProject.ext.supportRecyclerView
 
-    // Aesthetic
-    api project(':aesthetic-tint')
-
     // Kotlin
     api rootProject.ext.kotlinStdlib
 

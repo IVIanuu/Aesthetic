@@ -16,10 +16,13 @@
 
 package com.ivianuu.aesthetic.widget
 
+import android.content.res.ColorStateList
+import android.graphics.PorterDuff
+import android.os.Build
 import android.util.AttributeSet
 import android.widget.ProgressBar
-import com.ivianuu.aesthetic.tint.tint
 import com.ivianuu.aesthetic.tinter.AbstractTinter
+
 import io.reactivex.rxkotlin.addTo
 
 internal class ProgressBarTinter(
@@ -32,7 +35,22 @@ internal class ProgressBarTinter(
 
         aesthetic
             .accentColor()
-            .subscribe { view.tint(it) }
+            .subscribe { invalidateColors(it) }
             .addTo(compositeDisposable)
+    }
+
+    private fun invalidateColors(color: Int) {
+        with(view) {
+            val sl = ColorStateList.valueOf(color)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                progressTintList = sl
+                secondaryProgressTintList = sl
+                indeterminateTintList = sl
+            } else {
+                val mode = PorterDuff.Mode.SRC_IN
+                indeterminateDrawable?.setColorFilter(color, mode)
+                progressDrawable?.setColorFilter(color, mode)
+            }
+        }
     }
 }
