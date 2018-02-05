@@ -29,9 +29,6 @@ import com.ivianuu.aesthetic.tinter.AbstractTinter
 import com.ivianuu.aesthetic.util.*
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.addTo
-import android.support.v4.content.ContextCompat
-
-
 
 
 internal class ButtonTinter(

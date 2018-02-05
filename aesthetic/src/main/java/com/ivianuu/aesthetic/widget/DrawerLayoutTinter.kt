@@ -21,7 +21,6 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.util.AttributeSet
 import com.ivianuu.aesthetic.model.ActiveInactiveColors
 import com.ivianuu.aesthetic.tinter.AbstractTinter
-import com.ivianuu.aesthetic.util.MaterialColorHelper
 import com.ivianuu.aesthetic.util.getField
 import io.reactivex.rxkotlin.addTo
 

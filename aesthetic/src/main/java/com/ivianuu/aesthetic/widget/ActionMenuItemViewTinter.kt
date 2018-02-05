@@ -23,8 +23,6 @@ import com.ivianuu.aesthetic.model.ActiveInactiveColors
 import com.ivianuu.aesthetic.tinter.AbstractTinter
 import com.ivianuu.aesthetic.util.getField
 import com.ivianuu.aesthetic.util.tint
-import io.reactivex.annotations.NonNull
-import io.reactivex.functions.Consumer
 import io.reactivex.rxkotlin.addTo
 
 internal class ActionMenuItemViewTinter(view: ActionMenuItemView, attrs: AttributeSet) :

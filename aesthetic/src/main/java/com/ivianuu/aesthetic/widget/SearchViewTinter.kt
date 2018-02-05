@@ -24,8 +24,10 @@ import android.widget.EditText
 import android.widget.ImageView
 import com.ivianuu.aesthetic.model.BgIconColorState
 import com.ivianuu.aesthetic.tinter.AbstractTinter
-
-import com.ivianuu.aesthetic.util.*
+import com.ivianuu.aesthetic.util.ColorStateLists
+import com.ivianuu.aesthetic.util.getField
+import com.ivianuu.aesthetic.util.setCursorTint
+import com.ivianuu.aesthetic.util.tint
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.addTo
 import java.lang.reflect.Field

@@ -16,7 +16,4 @@
 
 package com.ivianuu.aesthetic.model
 
-import android.support.annotation.ColorInt
-import io.reactivex.functions.BiFunction
-
 internal class ColorIsDarkState(val color: Int, val isDark: Boolean)

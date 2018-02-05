@@ -20,7 +20,6 @@ import android.content.res.ColorStateList
 import android.support.design.widget.TextInputLayout
 import android.util.AttributeSet
 import com.ivianuu.aesthetic.tinter.AbstractTinter
-import com.ivianuu.aesthetic.util.MaterialColorHelper
 import com.ivianuu.aesthetic.util.getField
 import com.ivianuu.aesthetic.util.getObservableForResId
 import com.ivianuu.aesthetic.util.resolveResId

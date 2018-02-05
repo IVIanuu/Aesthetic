@@ -26,7 +26,6 @@ import com.ivianuu.aesthetic.model.ColorIsDarkState
 import com.ivianuu.aesthetic.tinter.AbstractTinter
 import com.ivianuu.aesthetic.util.MaterialColorHelper
 import com.ivianuu.aesthetic.util.adjustAlpha
-import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.addTo
 
