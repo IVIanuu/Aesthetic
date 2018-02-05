@@ -114,6 +114,13 @@ class Aesthetic private constructor(private val activity: AppCompatActivity) :
                 activity.setLightNavBarCompat(light)
             }
             .addTo(compositeDisposable)
+
+        // md dialogs
+        if (MaterialDialogHelper.shouldSupport()) {
+            accentColor()
+                .subscribe { MaterialDialogHelper.theme(it, MaterialColorHelper.isDarkTheme(activity)) }
+                .addTo(compositeDisposable)
+        }
     }
 
     override fun onActivityPaused(activity: Activity?) {
