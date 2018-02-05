@@ -73,46 +73,56 @@ class MainFragment : Fragment() {
 
         btn_black.setOnClickListener {
             aesthetic.edit()
-                .reset()
                 .primaryColor(Color.BLACK)
                 .accentColorRes(R.color.md_purple)
                 .statusBarColorAuto()
+                .navigationBarColorAuto()
+                .bottomNavBgMode(BottomNavBgMode.PRIMARY)
+                .bottomNavIconTextMode(BottomNavIconTextMode.BLACK_WHITE_AUTO)
                 .apply()
         }
 
         btn_red.setOnClickListener {
             aesthetic.edit()
-                .reset()
                 .primaryColorRes(R.color.md_red)
                 .accentColorRes(R.color.md_amber)
                 .statusBarColorAuto()
+                .navigationBarColorAuto()
+                .bottomNavBgMode(BottomNavBgMode.PRIMARY)
+                .bottomNavIconTextMode(BottomNavIconTextMode.BLACK_WHITE_AUTO)
                 .apply()
         }
 
         btn_purple.setOnClickListener {
             aesthetic.edit()
-                .reset()
                 .primaryColorRes(R.color.md_purple)
                 .accentColorRes(R.color.md_lime)
                 .statusBarColorAuto()
+                .navigationBarColorAuto()
+                .bottomNavBgMode(BottomNavBgMode.PRIMARY)
+                .bottomNavIconTextMode(BottomNavIconTextMode.BLACK_WHITE_AUTO)
                 .apply()
         }
 
         btn_blue.setOnClickListener {
             aesthetic.edit()
-                .reset()
                 .primaryColorRes(R.color.md_blue)
                 .accentColorRes(R.color.md_pink)
                 .statusBarColorAuto()
+                .navigationBarColorAuto()
+                .bottomNavBgMode(BottomNavBgMode.PRIMARY)
+                .bottomNavIconTextMode(BottomNavIconTextMode.BLACK_WHITE_AUTO)
                 .apply()
         }
 
         btn_green.setOnClickListener {
             aesthetic.edit()
-                .reset()
                 .primaryColorRes(R.color.md_green)
                 .accentColorRes(R.color.md_blue_grey)
                 .statusBarColorAuto()
+                .navigationBarColorAuto()
+                .bottomNavBgMode(BottomNavBgMode.PRIMARY)
+                .bottomNavIconTextMode(BottomNavIconTextMode.BLACK_WHITE_AUTO)
                 .apply()
         }
 
