@@ -62,11 +62,8 @@ internal fun Context.getObservableForResId(
 ): Observable<Int> {
     return when (resId) {
         resolveResId(R.attr.colorPrimary) -> Aesthetic.get(this).primaryColor()
-        resolveResId(R.attr.colorPrimaryDark) -> Aesthetic.get(this).primaryColor().map { it.darken() }
+        resolveResId(R.attr.colorPrimaryDark) -> Aesthetic.get(this).primaryColorDark()
         resolveResId(R.attr.colorAccent) -> Aesthetic.get(this).accentColor()
-        resolveResId(android.R.attr.statusBarColor) -> Aesthetic.get(this).statusBarColor()
-        resolveResId(android.R.attr.navigationBarColor) -> Aesthetic.get(this).navigationBarColor()
-        resolveResId(R.attr.cardBackgroundColor) -> Aesthetic.get(this).cardViewBackgroundColor()
         0 -> fallback
         else -> fallback
     }

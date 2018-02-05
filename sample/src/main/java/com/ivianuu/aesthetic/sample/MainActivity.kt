@@ -3,6 +3,7 @@ package com.ivianuu.aesthetic.sample
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
+import android.util.Log
 import com.ivianuu.aesthetic.Aesthetic
 import com.ivianuu.aesthetic.mode.BottomNavBgMode
 import com.ivianuu.aesthetic.mode.BottomNavIconTextMode
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
                 .bottomNavBgMode(BottomNavBgMode.PRIMARY)
                 .bottomNavIconTextMode(BottomNavIconTextMode.SELECTED_ACCENT)
                 .apply()
+            recreate()
         }
 
         pager.adapter = MainPagerAdapter(supportFragmentManager)
