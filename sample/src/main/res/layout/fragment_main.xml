@@ -77,6 +77,7 @@
             <TextView
                 android:id="@+id/body_textview"
                 android:layout_width="match_parent"
+                android:textColor="?android:textColorPrimary"
                 android:layout_height="wrap_content"
                 android:text="@string/lorem_ipsum"
                 android:textSize="@dimen/text_size_body" />

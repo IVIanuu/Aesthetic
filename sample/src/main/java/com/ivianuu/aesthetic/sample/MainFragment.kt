@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.PopupMenu
 import android.view.LayoutInflater
 import android.view.View
@@ -61,6 +62,7 @@ class MainFragment : Fragment() {
 
                     aesthetic.edit()
                         .activityTheme(theme)
+                        .isDark(theme != R.style.AppTheme)
                         .apply()
 
                     true
@@ -72,65 +74,56 @@ class MainFragment : Fragment() {
 
         btn_black.setOnClickListener {
             aesthetic.edit()
-                .primaryColorRes(R.color.text_color_primary)
+                .reset()
+                .primaryColor(Color.BLACK)
                 .accentColorRes(R.color.md_purple)
                 .statusBarColorAuto()
-                .navigationBarColorAuto()
-                .bottomNavBgMode(BottomNavBgMode.PRIMARY_DARK)
-                .bottomNavIconTextMode(BottomNavIconTextMode.BLACK_WHITE_AUTO)
                 .apply()
         }
 
         btn_red.setOnClickListener {
             aesthetic.edit()
+                .reset()
                 .primaryColorRes(R.color.md_red)
                 .accentColorRes(R.color.md_amber)
                 .statusBarColorAuto()
-                .navigationBarColorAuto()
-                .bottomNavBgMode(BottomNavBgMode.PRIMARY_DARK)
-                .bottomNavIconTextMode(BottomNavIconTextMode.BLACK_WHITE_AUTO)
                 .apply()
         }
 
         btn_purple.setOnClickListener {
             aesthetic.edit()
+                .reset()
                 .primaryColorRes(R.color.md_purple)
                 .accentColorRes(R.color.md_lime)
                 .statusBarColorAuto()
-                .navigationBarColorAuto()
-                .bottomNavBgMode(BottomNavBgMode.PRIMARY_DARK)
-                .bottomNavIconTextMode(BottomNavIconTextMode.BLACK_WHITE_AUTO)
                 .apply()
         }
 
         btn_blue.setOnClickListener {
             aesthetic.edit()
+                .reset()
                 .primaryColorRes(R.color.md_blue)
                 .accentColorRes(R.color.md_pink)
                 .statusBarColorAuto()
-                .navigationBarColorAuto()
-                .bottomNavBgMode(BottomNavBgMode.PRIMARY_DARK)
-                .bottomNavIconTextMode(BottomNavIconTextMode.BLACK_WHITE_AUTO)
                 .apply()
         }
 
         btn_green.setOnClickListener {
             aesthetic.edit()
+                .reset()
                 .primaryColorRes(R.color.md_green)
                 .accentColorRes(R.color.md_blue_grey)
                 .statusBarColorAuto()
-                .navigationBarColorAuto()
-                .bottomNavBgMode(BottomNavBgMode.PRIMARY_DARK)
-                .bottomNavIconTextMode(BottomNavIconTextMode.BLACK_WHITE_AUTO)
                 .apply()
         }
 
         btn_white.setOnClickListener {
             aesthetic.edit()
+                .reset()
                 .primaryColorRes(R.color.md_white)
                 .accentColorRes(R.color.md_blue)
                 .statusBarColorAuto()
-                .navigationBarColor(Color.WHITE)
+                .navigationBarColorAuto()
                 .bottomNavBgMode(BottomNavBgMode.PRIMARY)
                 .bottomNavIconTextMode(BottomNavIconTextMode.SELECTED_ACCENT)
                 .apply()

@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         if (aesthetic.isFirstTime()) {
             aesthetic.edit()
                 .activityTheme(R.style.AppTheme)
+                .isDark(false)
                 .navigationViewMode(NavigationViewMode.SELECTED_ACCENT)
                 .bottomNavBgMode(BottomNavBgMode.PRIMARY)
                 .bottomNavIconTextMode(BottomNavIconTextMode.SELECTED_ACCENT)
