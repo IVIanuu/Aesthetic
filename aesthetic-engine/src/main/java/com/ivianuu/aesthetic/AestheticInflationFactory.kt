@@ -97,6 +97,10 @@ internal class AestheticInflationFactory(
             view = null
         }
 
+        if (view != null && BLACKLIST.contains(view::class.java.name)) {
+            return view
+        }
+
         view = try {
             var viewContext = layoutInflater.context
             // Apply a theme wrapper, if requested.
@@ -169,5 +173,14 @@ internal class AestheticInflationFactory(
 
         fun onViewInflated(view: View, attrs: AttributeSet)
 
+    }
+
+    private companion object {
+        private val BLACKLIST = listOf(
+            "android.support.design.internal.NavigationMenuItemView",
+            "ViewStub",
+            "fragment",
+            "include"
+        )
     }
 }

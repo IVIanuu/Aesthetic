@@ -34,8 +34,6 @@ import com.ivianuu.aesthetic.widget.*
 internal class TintBinder : AestheticInflationFactory.Interceptor {
 
     override fun onViewInflated(view: View, attrs: AttributeSet) {
-        if (BLACKLIST.contains(view::class.java.name)) return
-
         // get tinter
         val tinter: Tinter = when (view) {
             is BottomNavigationView -> BottomNavigationViewTinter(view, attrs)
@@ -103,14 +101,5 @@ internal class TintBinder : AestheticInflationFactory.Interceptor {
         // attach tinter
         val binder = TintBinding(tinter, view)
         view.addOnAttachStateChangeListener(binder)
-    }
-
-    private companion object {
-        private val BLACKLIST = listOf(
-            "android.support.design.internal.NavigationMenuItemView",
-            "ViewStub",
-            "fragment",
-            "include"
-        )
     }
 }
