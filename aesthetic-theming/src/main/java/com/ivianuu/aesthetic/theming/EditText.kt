@@ -18,11 +18,8 @@ package com.ivianuu.aesthetic.theming
 
 import android.content.res.ColorStateList
 import android.os.Build
-import android.support.annotation.ColorInt
-import android.support.v4.content.ContextCompat
 import android.support.v4.view.TintableBackgroundView
 import android.support.v4.view.ViewCompat
-import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
 import com.ivianuu.aesthetic.theming.util.getControlNormalColor

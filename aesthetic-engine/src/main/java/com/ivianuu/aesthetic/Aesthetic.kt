@@ -53,6 +53,7 @@ class Aesthetic private constructor(private val activity: AppCompatActivity) :
         // set theme
         activityTheme()
             .take(1)
+            .filter { it != 0 }
             .subscribe { activity.setTheme(it) }
             .addTo(compositeDisposable)
     }
@@ -111,9 +112,13 @@ class Aesthetic private constructor(private val activity: AppCompatActivity) :
 
         // md dialogs
         if (MaterialDialogHelper.shouldSupport()) {
-           /* accentColor()
-                .subscribe { MaterialDialogHelper.theme(it, context.isDarkTheme(activity)) }
-                .addTo(compositeDisposable) */
+            Observables
+                .combineLatest(
+                    accentColor(),
+                    isDark()
+                )
+                .subscribe { MaterialDialogHelper.theme(it.first, it.second) }
+                .addTo(compositeDisposable)
         }
     }
 
@@ -131,10 +136,7 @@ class Aesthetic private constructor(private val activity: AppCompatActivity) :
 
     fun isFirstTime() = themeStore.isFirstTime()
 
-    fun activityTheme(): Observable<Int> {
-        return themeStore.activityTheme()
-            .filter { it != 0 }
-    }
+    fun activityTheme() = themeStore.activityTheme()
 
     fun isDark() = themeStore.isDark()
 
@@ -343,7 +345,6 @@ class Aesthetic private constructor(private val activity: AppCompatActivity) :
 
     // ignore
     override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {}
-
     override fun onActivityStarted(activity: Activity?) {}
     override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {}
     override fun onActivityStopped(activity: Activity?) {}

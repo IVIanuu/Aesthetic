@@ -16,28 +16,23 @@
 
 package com.ivianuu.aesthetic.theming
 
-import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.RippleDrawable
 import android.os.Build
-import android.support.annotation.ColorInt
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.TextInputEditText
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.SwitchCompat
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.TextView
 import com.ivianuu.aesthetic.theming.util.*
 
 fun View.tintBackground(color: Int, isDark: Boolean = context.isWindowBackgroundDark()) {
-    // Need to tint the background of a view
     if (this is FloatingActionButton || this is Button) {
         setTintSelector(color, isDark)
-    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-        && background is RippleDrawable) {
-        val rd = this.background as RippleDrawable
+    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && background is RippleDrawable) {
+        val ripple = this.background as RippleDrawable
         val unchecked = context.getRippleColor(isDark)
         val checked = color.adjustAlpha(0.4f)
         val sl = ColorStateList(
@@ -48,15 +43,14 @@ fun View.tintBackground(color: Int, isDark: Boolean = context.isWindowBackground
             ),
             intArrayOf(unchecked, checked, checked)
         )
-        rd.setColor(sl)
-    } else if (this.background != null) {
-        var drawable: Drawable? = this.background
+        ripple.setColor(sl)
+    } else {
+        val drawable: Drawable? = this.background
         if (drawable != null) {
             if (this is TextInputEditText) {
                 drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
             } else {
-                drawable = drawable.tinted(color)
-                setBackgroundCompat(drawable)
+                setBackgroundCompat(drawable.tinted(color))
             }
         }
     }

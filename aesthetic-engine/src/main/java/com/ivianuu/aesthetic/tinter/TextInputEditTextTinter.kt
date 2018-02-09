@@ -18,7 +18,6 @@ package com.ivianuu.aesthetic.tinter
 
 import android.support.design.widget.TextInputEditText
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import com.ivianuu.aesthetic.theming.tint
 import com.ivianuu.aesthetic.tinter.base.AbstractTinter

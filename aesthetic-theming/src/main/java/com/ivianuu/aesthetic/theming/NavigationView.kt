@@ -20,9 +20,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.StateListDrawable
-import android.support.annotation.ColorInt
 import android.support.design.widget.NavigationView
-import android.support.v4.content.ContextCompat
 import com.ivianuu.aesthetic.theming.util.adjustAlpha
 import com.ivianuu.aesthetic.theming.util.getNavigationDrawerSelectedColor
 import com.ivianuu.aesthetic.theming.util.isWindowBackgroundDark

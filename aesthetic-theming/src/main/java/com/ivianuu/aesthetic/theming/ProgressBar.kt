@@ -19,7 +19,6 @@ package com.ivianuu.aesthetic.theming
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.os.Build
-import android.support.annotation.ColorInt
 import android.widget.ProgressBar
 
 fun ProgressBar.tint(color: Int) {

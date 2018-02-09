@@ -16,7 +16,6 @@
 
 package com.ivianuu.aesthetic.theming
 
-import android.graphics.Color
 import android.support.design.widget.TabLayout
 import android.view.View
 import com.ivianuu.aesthetic.theming.util.*

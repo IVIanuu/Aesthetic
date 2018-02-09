@@ -16,7 +16,6 @@
 
 package com.ivianuu.aesthetic.theming
 
-import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.support.v7.widget.SearchView
 import android.view.View

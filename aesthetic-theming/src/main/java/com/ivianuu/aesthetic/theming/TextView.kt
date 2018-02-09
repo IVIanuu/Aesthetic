@@ -17,9 +17,6 @@
 package com.ivianuu.aesthetic.theming
 
 import android.graphics.drawable.Drawable
-import android.support.annotation.ColorInt
-import android.support.v4.content.ContextCompat
-import android.widget.EditText
 import android.widget.TextView
 import com.ivianuu.aesthetic.theming.util.getField
 import com.ivianuu.aesthetic.theming.util.getResDrawable

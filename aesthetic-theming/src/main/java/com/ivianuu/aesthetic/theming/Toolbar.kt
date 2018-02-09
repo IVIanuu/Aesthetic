@@ -19,8 +19,10 @@ package com.ivianuu.aesthetic.theming
 import android.graphics.drawable.Drawable
 import android.support.v7.widget.SearchView
 import android.support.v7.widget.Toolbar
-import android.widget.EditText
-import com.ivianuu.aesthetic.theming.util.*
+import com.ivianuu.aesthetic.theming.util.getField
+import com.ivianuu.aesthetic.theming.util.getIconColor
+import com.ivianuu.aesthetic.theming.util.isDark
+import com.ivianuu.aesthetic.theming.util.tintedNullable
 
 fun Toolbar.tint(bgColor: Int,
                  activeColor: Int = context.getIconColor(bgColor.isDark())) {

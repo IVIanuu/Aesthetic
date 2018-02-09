@@ -24,8 +24,12 @@ import com.ivianuu.aesthetic.theming.util.tintedNullable
 
 fun ActionMenuItemView.tint(activeColor: Int,
                             inactiveColor: Int) {
-    val iconField = ActionMenuItemView::class.getField("mIcon")
-    val icon = iconField.get(this) as Drawable?
-    iconField.set(this, icon.tintedNullable(getEnabledColorStateList(activeColor, inactiveColor)))
-    setTextColor(getEnabledColorStateList(activeColor, inactiveColor))
+    try {
+        val iconField = ActionMenuItemView::class.getField("mIcon")
+        val icon = iconField.get(this) as Drawable?
+        iconField.set(this, icon.tintedNullable(getEnabledColorStateList(activeColor, inactiveColor)))
+        setTextColor(getEnabledColorStateList(activeColor, inactiveColor))
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
 }

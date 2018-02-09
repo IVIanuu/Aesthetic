@@ -31,7 +31,6 @@ import android.widget.*
 import com.ivianuu.aesthetic.AestheticInflationFactory
 import com.ivianuu.aesthetic.R
 import com.ivianuu.aesthetic.tinter.*
-import com.ivianuu.aesthetic.tinter.ToolbarTinter
 
 internal class TintBinder : AestheticInflationFactory.Interceptor {
 

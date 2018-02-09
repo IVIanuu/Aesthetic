@@ -17,8 +17,6 @@
 package com.ivianuu.aesthetic.theming
 
 import android.os.Build
-import android.support.annotation.ColorInt
-import android.support.v4.content.ContextCompat
 import android.widget.SeekBar
 import com.ivianuu.aesthetic.theming.util.getControlDisabledColor
 import com.ivianuu.aesthetic.theming.util.getDisabledColorStateList
