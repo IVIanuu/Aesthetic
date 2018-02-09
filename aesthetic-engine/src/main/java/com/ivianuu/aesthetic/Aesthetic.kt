@@ -40,6 +40,8 @@ class Aesthetic private constructor(private val activity: AppCompatActivity) :
 
     private val themeStore = ThemeStore.get(activity)
 
+    private var lastActivityTheme = 0
+
     private val compositeDisposable = CompositeDisposable()
 
     init {
@@ -53,8 +55,12 @@ class Aesthetic private constructor(private val activity: AppCompatActivity) :
         // set theme
         activityTheme()
             .take(1)
-            .filter { it != 0 }
-            .subscribe { activity.setTheme(it) }
+            .subscribe {
+                lastActivityTheme = it
+                if (it != 0) {
+                    activity.setTheme(it)
+                }
+            }
             .addTo(compositeDisposable)
     }
 
@@ -63,8 +69,11 @@ class Aesthetic private constructor(private val activity: AppCompatActivity) :
 
         // recreate on theme changes
         activityTheme()
-            .skip(1)
-            .subscribe { activity.recreate() }
+            .subscribe {
+                if (lastActivityTheme != it) {
+                    activity.recreate()
+                }
+            }
             .addTo(compositeDisposable)
 
         // set task description
