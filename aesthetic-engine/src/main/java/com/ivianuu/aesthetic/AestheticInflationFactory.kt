@@ -146,7 +146,7 @@ internal class AestheticInflationFactory(
 
         if (view != null
             && !BLACKLIST.contains(view::class.java.name)) {
-            interceptors.forEach { it.onViewInflated(view, attrs) }
+            interceptors.forEach { it.onViewInflated(view, attrs, parent) }
         }
 
         return view
@@ -160,7 +160,7 @@ internal class AestheticInflationFactory(
 
     interface Interceptor {
 
-        fun onViewInflated(view: View, attrs: AttributeSet)
+        fun onViewInflated(view: View, attrs: AttributeSet, parent: View?)
 
     }
 

@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.ivianuu.aesthetic.Aesthetic
 import com.ivianuu.aesthetic.mode.BottomNavBgMode
 import com.ivianuu.aesthetic.mode.BottomNavIconTextMode
@@ -143,6 +144,10 @@ class MainFragment : Fragment() {
             snackbar = Snackbar.make(root, R.string.hello_world, Snackbar.LENGTH_LONG)
                 .setAction(android.R.string.cancel) {}
                 .apply { show() }
+        }
+
+        btn_dialog.setOnClickListener {
+            Toast.makeText(context, "hello", Toast.LENGTH_SHORT).show()
         }
     }
 

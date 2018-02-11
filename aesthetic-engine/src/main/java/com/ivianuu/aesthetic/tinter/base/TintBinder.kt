@@ -34,9 +34,9 @@ import com.ivianuu.aesthetic.tinter.*
 
 internal class TintBinder : AestheticInflationFactory.Interceptor {
 
-    override fun onViewInflated(view: View, attrs: AttributeSet) {
+    override fun onViewInflated(view: View, attrs: AttributeSet, parent: View?) {
         // get tinter
-        val tinter: Tinter = when (view) {
+        val tinter: Tinter? = when (view) {
             is BottomNavigationView -> BottomNavigationViewTinter(
                 view,
                 attrs
@@ -128,8 +128,10 @@ internal class TintBinder : AestheticInflationFactory.Interceptor {
                             DialogButtonTinter(view, attrs)
                         } else if (view.id == R.id.snackbar_text) {
                             SnackbarTextViewTinter(view, attrs)
-                        } else {
+                        } else if (!(parent is LinearLayout && view.id == android.R.id.message)) {
                             TextViewTinter(view, attrs)
+                        } else {
+                            null
                         }
                     }
                 }
@@ -140,7 +142,9 @@ internal class TintBinder : AestheticInflationFactory.Interceptor {
         }
 
         // attach tinter
-        val binder = TintBinding(tinter, view)
-        view.addOnAttachStateChangeListener(binder)
+        if (tinter != null) {
+            val binder = TintBinding(tinter, view)
+            view.addOnAttachStateChangeListener(binder)
+        }
     }
 }
