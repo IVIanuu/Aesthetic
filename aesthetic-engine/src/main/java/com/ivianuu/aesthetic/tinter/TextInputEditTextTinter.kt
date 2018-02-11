@@ -57,7 +57,7 @@ internal class TextInputEditTextTinter(view: TextInputEditText, attrs: Attribute
 
         // workaround because the text input layout clears our background when it animates
         focusChanges()
-            .delay(50, TimeUnit.MILLISECONDS)
+            .delay(5, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap {
                 Observables
