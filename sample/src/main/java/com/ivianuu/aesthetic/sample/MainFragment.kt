@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import com.afollestad.materialdialogs.MaterialDialog
 import com.ivianuu.aesthetic.Aesthetic
 import com.ivianuu.aesthetic.mode.BottomNavBgMode
 import com.ivianuu.aesthetic.mode.BottomNavIconTextMode
@@ -147,7 +148,11 @@ class MainFragment : Fragment() {
         }
 
         btn_dialog.setOnClickListener {
-            Toast.makeText(context, "hello", Toast.LENGTH_SHORT).show()
+            MaterialDialog.Builder(context!!)
+                .title(R.string.hello_world)
+                .content(R.string.lorem_ipsum_long)
+                .positiveText(android.R.string.ok)
+                .show()
         }
     }
 

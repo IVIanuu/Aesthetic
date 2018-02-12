@@ -121,13 +121,7 @@ class Aesthetic private constructor(private val activity: AppCompatActivity) :
 
         // md dialogs
         if (MaterialDialogHelper.shouldSupport()) {
-            Observables
-                .combineLatest(
-                    accentColor(),
-                    isDark()
-                )
-                .subscribe { MaterialDialogHelper.theme(it.first, it.second) }
-                .addTo(compositeDisposable)
+            compositeDisposable.add(MaterialDialogHelper.observe(this))
         }
     }
 

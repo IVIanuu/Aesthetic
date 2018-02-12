@@ -43,4 +43,7 @@ dependencies {
 
     // Kotlin
     implementation rootProject.ext.kotlinStdlib
+    
+    // Material Dialogs
+    implementation rootProject.ext.materialDialogs
 }

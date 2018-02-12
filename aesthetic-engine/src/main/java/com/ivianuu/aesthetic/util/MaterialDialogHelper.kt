@@ -17,6 +17,9 @@
 package com.ivianuu.aesthetic.util
 
 import android.content.res.ColorStateList
+import com.ivianuu.aesthetic.Aesthetic
+import io.reactivex.disposables.Disposable
+import io.reactivex.rxkotlin.Observables
 
 internal object MaterialDialogHelper {
 
@@ -30,34 +33,62 @@ internal object MaterialDialogHelper {
         return true
     }
 
-    fun theme(accentColor: Int,
-              dark: Boolean) {
+    fun observe(aesthetic: Aesthetic): Disposable {
+        return Observables
+            .combineLatest(
+                aesthetic.accentColor(),
+                aesthetic.primaryTextColor(),
+                aesthetic.secondaryTextColor(),
+                aesthetic.isDark(),
+                { accentColor, primaryTextColor, secondaryTextColor, isDark ->
+                    Params(accentColor, primaryTextColor, secondaryTextColor, isDark)
+                }
+            )
+            .subscribe { theme(it) }
+    }
+
+    private fun theme(params: Params) {
         try {
             val cls = Class.forName("com.afollestad.materialdialogs.internal.ThemeSingleton")
             val getMethod = cls.getMethod("get")
             val instance = getMethod.invoke(null)
 
             val fieldDarkTheme = cls.getField("darkTheme")
-            fieldDarkTheme.set(instance, dark)
+            fieldDarkTheme.set(instance, params.isDark)
+
+            val fieldTitleColor = cls.getField("titleColor")
+            fieldTitleColor.set(instance, params.primaryTextColor)
+
+            val fieldContentColor = cls.getField("contentColor")
+            fieldContentColor.set(instance, params.secondaryTextColor)
+
+            val fieldItemColor = cls.getField("itemColor")
+            fieldItemColor.set(instance, params.secondaryTextColor)
 
             val fieldPosColor = cls.getField("positiveColor")
-            fieldPosColor.set(instance, ColorStateList.valueOf(accentColor))
+            fieldPosColor.set(instance, ColorStateList.valueOf(params.accentColor))
 
             val fieldNeuColor = cls.getField("neutralColor")
-            fieldNeuColor.set(instance, ColorStateList.valueOf(accentColor))
+            fieldNeuColor.set(instance, ColorStateList.valueOf(params.accentColor))
 
             val fieldNegColor = cls.getField("negativeColor")
-            fieldNegColor.set(instance, ColorStateList.valueOf(accentColor))
+            fieldNegColor.set(instance, ColorStateList.valueOf(params.accentColor))
 
             val fieldWidgetColor = cls.getField("widgetColor")
-            fieldWidgetColor.set(instance, ColorStateList.valueOf(accentColor))
+            fieldWidgetColor.set(instance, params.accentColor)
 
             val fieldLinkColor = cls.getField("linkColor")
-            fieldLinkColor.set(instance, ColorStateList.valueOf(accentColor))
-
+            fieldLinkColor.set(instance, ColorStateList.valueOf(params.accentColor))
         } catch (t: Throwable) {
             t.printStackTrace()
         }
 
     }
+
+    private data class Params(
+        val accentColor: Int,
+        val primaryTextColor: Int,
+        val secondaryTextColor: Int,
+        val isDark: Boolean
+    )
 }
