@@ -169,7 +169,8 @@ internal class AestheticInflationFactory(
             "android.support.design.internal.NavigationMenuItemView",
             "ViewStub",
             "fragment",
-            "include"
+            "include",
+            "com.afollestad.materialdialogs.internal.MDButton"
         )
     }
 }

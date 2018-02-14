@@ -17,6 +17,7 @@
 package com.ivianuu.aesthetic.util
 
 import android.content.res.ColorStateList
+import android.util.Log
 import com.ivianuu.aesthetic.Aesthetic
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.Observables

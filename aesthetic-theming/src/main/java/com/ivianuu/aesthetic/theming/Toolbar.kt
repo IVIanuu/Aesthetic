@@ -29,8 +29,7 @@ fun Toolbar.tint(bgColor: Int,
     setBackgroundColor(bgColor)
     setTitleTextColor(activeColor)
     overflowIcon?.tintedNullable(activeColor)
-    navigationIcon?.tintedNullable(activeColor
-    )
+    navigationIcon?.tintedNullable(activeColor)
 
     // The collapse icon displays when action views are expanded (e.g. SearchView)
     try {

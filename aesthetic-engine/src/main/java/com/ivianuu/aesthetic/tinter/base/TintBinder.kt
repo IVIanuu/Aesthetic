@@ -26,6 +26,7 @@ import android.support.v7.widget.*
 import android.support.v7.widget.SearchView
 import android.support.v7.widget.Toolbar
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.widget.*
 import com.ivianuu.aesthetic.AestheticInflationFactory
@@ -103,13 +104,12 @@ internal class TintBinder : AestheticInflationFactory.Interceptor {
                                 attrs
                             )
                             else -> {
-                                if (view.id == R.id.snackbar_action) {
-                                    SnackbarButtonTinter(
-                                        view,
-                                        attrs
-                                    )
-                                } else {
-                                    ButtonTinter(view, attrs)
+                                when {
+                                    view.id == R.id.snackbar_action -> SnackbarButtonTinter(view, attrs)
+                                    (view.id == android.R.id.button1
+                                            || view.id == android.R.id.button2
+                                            || view.id == android.R.id.button3) -> DialogButtonTinter(view, attrs)
+                                    else -> ButtonTinter(view, attrs)
                                 }
                             }
                         }
@@ -122,11 +122,7 @@ internal class TintBinder : AestheticInflationFactory.Interceptor {
                         }
                     }
                     else -> {
-                        if (view.id == android.R.id.button1
-                            || view.id == android.R.id.button2
-                            || view.id == android.R.id.button3) {
-                            DialogButtonTinter(view, attrs)
-                        } else if (view.id == R.id.snackbar_text) {
+                        if (view.id == R.id.snackbar_text) {
                             SnackbarTextViewTinter(view, attrs)
                         } else if (!(parent is LinearLayout && view.id == android.R.id.message)) {
                             TextViewTinter(view, attrs)
