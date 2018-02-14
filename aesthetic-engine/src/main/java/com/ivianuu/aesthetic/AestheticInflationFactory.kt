@@ -145,7 +145,7 @@ internal class AestheticInflationFactory(
         }
 
         if (view != null
-            && !BLACKLIST.contains(view::class.java.name)) {
+            && isAllowed(parent, name)) {
             interceptors.forEach { it.onViewInflated(view, attrs, parent) }
         }
 
@@ -156,6 +156,23 @@ internal class AestheticInflationFactory(
         if (!interceptors.contains(interceptor)) {
             interceptors.add(interceptor)
         }
+    }
+
+    private fun isAllowed(parent: View?,
+                          name: String): Boolean {
+        if (BLACKLIST.contains(name)) {
+            return false
+        }
+
+        if (parent != null) {
+            val clazz = parent::class.java.name
+            if (clazz == "android.support.design.widget.TabLayout\$TabView"
+                || clazz == "android.support.design.internal.BaselineLayout") {
+                return false
+            }
+        }
+
+        return true
     }
 
     interface Interceptor {

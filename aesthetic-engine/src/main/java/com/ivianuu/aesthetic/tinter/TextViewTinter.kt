@@ -30,14 +30,6 @@ internal class TextViewTinter(view: TextView, attrs: AttributeSet) :
 
     override fun attach() {
         super.attach()
-        val parent = view.parent
-        if (parent != null) {
-            val clazz = parent::class.java.name
-            if (clazz == "android.support.design.widget.TabLayout\$TabView"
-                || clazz == "android.support.design.internal.BaselineLayout") {
-                return
-            }
-        }
 
         val fallback = if (view.id == android.R.id.title) {
             aesthetic.primaryTextColor()
