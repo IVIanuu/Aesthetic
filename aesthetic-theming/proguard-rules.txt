@@ -1,0 +1,8 @@
+-keep class android.support.v4.widget.EdgeEffectCompat { *; }
+-keepclassmembernames class android.support.v4.widget.** { *; }
+
+-keepclassmembernames class android.support.v7.widget.** { *; }
+-keepclassmembernames class android.support.v7.view.menu.** { *; }
+
+-keepclassmembernames class android.support.design.widget.** { *; }
+-keepclassmembernames class android.support.design.internal.** { *; }
