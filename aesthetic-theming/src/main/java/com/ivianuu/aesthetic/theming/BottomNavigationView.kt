@@ -25,6 +25,13 @@ fun BottomNavigationView.tint(bgColor: Int,
                               selectedColor: Int = context.getIconColor(bgColor.isDark()),
                               unselectedColor: Int = context.getInactiveIconColor(bgColor.isDark())) {
     setBackgroundColor(bgColor)
+    setItemColor(selectedColor, unselectedColor)
+    setItemRippleColor(bgColor)
+}
+
+fun BottomNavigationView.setItemColor(
+    selectedColor: Int = context.getIconColor(),
+    unselectedColor: Int = context.getInactiveIconColor()) {
 
     val colorStateList = ColorStateList(
         arrayOf(
@@ -37,13 +44,16 @@ fun BottomNavigationView.tint(bgColor: Int,
     itemIconTintList = colorStateList
     itemTextColor = colorStateList
 
+}
+
+fun BottomNavigationView.setItemRippleColor(color: Int = context.getRippleColor()) {
     try {
         val menuViewField = BottomNavigationView::class.getField("mMenuView")
         val menuView = menuViewField.get(this)
         val buttonsField = menuView::class.getField("mButtons")
         val buttons = buttonsField.get(menuView) as Array<BottomNavigationItemView>
         buttons.forEach {
-            it.background = getBorderlessRippleDrawable(context, bgColor.isDark())
+            it.background = getBorderlessRippleDrawable(context, color)
         }
     } catch (e: Exception) {
         e.printStackTrace()

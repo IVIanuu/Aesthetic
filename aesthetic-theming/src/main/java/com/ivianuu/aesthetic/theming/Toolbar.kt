@@ -16,6 +16,7 @@
 
 package com.ivianuu.aesthetic.theming
 
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.support.v7.widget.SearchView
 import android.support.v7.widget.Toolbar
@@ -25,17 +26,21 @@ import com.ivianuu.aesthetic.theming.util.isDark
 import com.ivianuu.aesthetic.theming.util.tintedNullable
 
 fun Toolbar.tint(bgColor: Int,
-                 activeColor: Int = context.getIconColor(bgColor.isDark())) {
+                 itemColor: Int = context.getIconColor(bgColor.isDark())) {
     setBackgroundColor(bgColor)
-    setTitleTextColor(activeColor)
-    overflowIcon?.tintedNullable(activeColor)
-    navigationIcon?.tintedNullable(activeColor)
+    setItemColor(itemColor)
+}
+
+fun Toolbar.setItemColor(itemColor: Int) {
+    setTitleTextColor(itemColor)
+    overflowIcon?.tintedNullable(itemColor)
+    navigationIcon?.tintedNullable(itemColor)
 
     // The collapse icon displays when action views are expanded (e.g. SearchView)
     try {
         val field = Toolbar::class.getField("mCollapseIcon")
         (field.get(this) as Drawable?)?.tintedNullable(
-            activeColor)
+            itemColor)
     } catch (e: Exception) {
         e.printStackTrace()
     }
@@ -43,9 +48,10 @@ fun Toolbar.tint(bgColor: Int,
     (0 until menu.size())
         .map { menu.getItem(it) }
         .forEach {
-            it.icon?.tintedNullable(activeColor)
+            it.icon?.tintedNullable(itemColor)
             val actionView = it.actionView
             if (actionView != null && actionView is SearchView) {
-                actionView.tint(bgColor, activeColor)
+                actionView.setItemColor(itemColor)
             }
-        }}
+        }
+}

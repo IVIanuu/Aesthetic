@@ -28,7 +28,11 @@ fun SearchView.tint(bgColor: Int,
                     activeColor: Int = context.getIconColor(bgColor.isDark()),
                     inactiveColor: Int = context.getInactiveIconColor(bgColor.isDark())) {
     setBackgroundColor(bgColor)
+    setItemColor(activeColor, inactiveColor)
+}
 
+fun SearchView.setItemColor(activeColor: Int = context.getIconColor(),
+                            inactiveColor: Int = context.getInactiveIconColor()) {
     val colorStateList = getEnabledColorStateList(
         activeColor,
         inactiveColor
