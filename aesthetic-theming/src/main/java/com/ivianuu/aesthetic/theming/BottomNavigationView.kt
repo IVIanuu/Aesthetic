@@ -48,9 +48,9 @@ fun BottomNavigationView.setItemColor(
 
 fun BottomNavigationView.setItemRippleColor(color: Int = context.getRippleColor()) {
     try {
-        val menuViewField = BottomNavigationView::class.getField("mMenuView")
+        val menuViewField = BottomNavigationView::class.getField("menuView")
         val menuView = menuViewField.get(this)
-        val buttonsField = menuView::class.getField("mButtons")
+        val buttonsField = menuView::class.getField("buttons")
         val buttons = buttonsField.get(menuView) as Array<BottomNavigationItemView>
         buttons.forEach {
             it.background = getBorderlessRippleDrawable(context, color)
