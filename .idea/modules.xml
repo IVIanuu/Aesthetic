@@ -3,12 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Aesthetic.iml" filepath="$PROJECT_DIR$/Aesthetic.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Aesthetic.iml" filepath="$PROJECT_DIR$/Aesthetic.iml" />
-      <module fileurl="file://$PROJECT_DIR$/aesthetic-engine/aesthetic-engine.iml" filepath="$PROJECT_DIR$/aesthetic-engine/aesthetic-engine.iml" />
       <module fileurl="file://$PROJECT_DIR$/aesthetic-engine/aesthetic-engine.iml" filepath="$PROJECT_DIR$/aesthetic-engine/aesthetic-engine.iml" />
       <module fileurl="file://$PROJECT_DIR$/aesthetic-theming/aesthetic-theming.iml" filepath="$PROJECT_DIR$/aesthetic-theming/aesthetic-theming.iml" />
-      <module fileurl="file://$PROJECT_DIR$/aesthetic-theming/aesthetic-theming.iml" filepath="$PROJECT_DIR$/aesthetic-theming/aesthetic-theming.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
       <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
     </modules>
   </component>

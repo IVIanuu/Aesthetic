@@ -23,7 +23,7 @@ import com.ivianuu.aesthetic.theming.util.getField
 fun TextInputLayout.setHintTextColor(hintColor: Int) {
     try {
         val mDefaultTextColorField =
-            TextInputLayout::class.getField("mDefaultTextColor")
+            TextInputLayout::class.getField("defaultHintTextColor")
         mDefaultTextColorField.set(this, ColorStateList.valueOf(hintColor))
         val updateLabelStateMethod = TextInputLayout::class.java.getDeclaredMethod(
             "updateLabelState",
@@ -42,7 +42,7 @@ fun TextInputLayout.setHintTextColor(hintColor: Int) {
 fun TextInputLayout.setAccentTextColor(accentColor: Int) {
     try {
         val mFocusedTextColorField =
-            TextInputLayout::class.getField("mFocusedTextColor")
+            TextInputLayout::class.getField("focusedTextColor")
         mFocusedTextColorField.set(this, ColorStateList.valueOf(accentColor))
         val updateLabelStateMethod = TextInputLayout::class.java.getDeclaredMethod(
             "updateLabelState",
